@@ -84,7 +84,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Cómo se preparará:** tablero limpio
 - **Resultado observado:** 200 `{"ok":true,"mensaje":"Tarjeta creada en Trello"}`; tarjeta en TI con "Observaciones (IA) · equipos_accesos: Necesita portátil y correo institucional antes del primer día"
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P01_n8n_respuesta200.jpg](evidencias/P01_n8n_respuesta200.jpg) ![P01_trello_tarjeta_TI.jpg](evidencias/P01_trello_tarjeta_TI.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba1_Normal_TI_Workflow.jpg](evidencias/C11_Prueba1_Normal_TI_Workflow.jpg) ![C11_Prueba1_Normal_TI_Trello.jpg](evidencias/C11_Prueba1_Normal_TI_Trello.jpg)
 
 ### Caso CP-02: Registro normal en RRHH
 - **Revisión asociada:** RC-07
@@ -96,7 +96,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Efecto que no debe ocurrir:** otra categoría o datos inventados en el resumen
 - **Resultado observado:** 200; tarjeta en RRHH con "documentos: Falta el certificado de afiliación de la EPS anterior"
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P02_n8n_respuesta200.jpg](evidencias/P02_n8n_respuesta200.jpg) ![P02_trello_tarjeta_RRHH.jpg](evidencias/P02_trello_tarjeta_RRHH.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba2_Normal_RRHH_Workflow.jpg](evidencias/C11_Prueba2_Normal_RRHH_Workflow.jpg) ![C11_Prueba2_Normal_RRHH_Trello.jpg](evidencias/C11_Prueba2_Normal_RRHH_Trello.jpg)
 
 ### Caso CP-03: Registro normal en Operaciones
 - **Revisión asociada:** RC-07
@@ -108,7 +108,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Efecto que no debe ocurrir:** tarjeta en otra lista
 - **Resultado observado:** 200; tarjeta en Operaciones con "equipos_accesos: El colaborador iniciará en la jornada de la tarde y necesita dotación talla M."
 - **Conclusión de la prueba:** **Cumple, con observación.** "Dotación" no corresponde claramente a ninguna categoría y la IA no marcó `[REVISAR]` (ver PD-09).
-- **Evidencia de ejecución:** ![P03_n8n_respuesta200.jpg](evidencias/P03_n8n_respuesta200.jpg) ![P03_trello_tarjeta_Operaciones.jpg](evidencias/P03_trello_tarjeta_Operaciones.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba3_Normal_Operaciones_Workflow.jpg](evidencias/C11_Prueba3_Normal_Operaciones_Workflow.jpg) ![C11_Prueba3_Normal_Operaciones_Trello.jpg](evidencias/C11_Prueba3_Normal_Operaciones_Trello.jpg)
 
 ### Caso CP-04: Área no reconocida
 - **Revisión asociada:** RC-04
@@ -120,7 +120,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Efecto que no debe ocurrir:** crear una tarjeta
 - **Resultado observado:** 422 `{"error":"Área no reconocida","validas":["TI","RRHH","Operaciones"]}`; ninguna tarjeta
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P04_n8n_respuesta422.jpg](evidencias/P04_n8n_respuesta422.jpg) ![P04-P07_trello_sin_tarjetas_extra.jpg](evidencias/P04-P07_trello_sin_tarjetas_extra.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba4_Area_Invalida_Workflow.jpg](evidencias/C11_Prueba4_Area_Invalida_Workflow.jpg) ![C11_Prueba4a7_Rechazos_Sin_Tarjeta_Trello.jpg](evidencias/C11_Prueba4a7_Rechazos_Sin_Tarjeta_Trello.jpg)
 
 ### Caso CP-05: Solicitud duplicada
 - **Revisión asociada:** RC-05
@@ -133,7 +133,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Resultado observado:** 409 `{"error":"Colaborador ya registrado"}`; una sola tarjeta
 - **Conclusión de la prueba:** **Cumple**
 - **Evolución:** en la prueba de Manuela, el primer intento **no cumplió** (creó una tarjeta repetida). Después del ajuste respondió 409. Se repitió también en v3 (CP-05b).
-- **Evidencia de ejecución:** ![P05_n8n_respuesta409.jpg](evidencias/P05_n8n_respuesta409.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba5_Duplicado_Workflow.jpg](evidencias/C11_Prueba5_Duplicado_Workflow.jpg)
 
 ### Caso CP-06: Campos faltantes
 - **Revisión asociada:** RC-02
@@ -142,7 +142,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Criterio de aceptación:** 400 con la lista de campos requeridos
 - **Resultado observado:** 400 `{"error":"Faltan campos obligatorios","requeridos":[...]}`; ninguna tarjeta
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P06_n8n_respuesta400.jpg](evidencias/P06_n8n_respuesta400.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba6_Campos_Faltantes_Workflow.jpg](evidencias/C11_Prueba6_Campos_Faltantes_Workflow.jpg)
 
 ### Caso CP-07: Tipo de contrato que no aplica
 - **Revisión asociada:** RC-03
@@ -151,7 +151,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Criterio de aceptación:** ese mensaje y ninguna tarjeta de Jorge
 - **Resultado observado:** 200 `{"recibido":true,"mensaje":"Contrato no aplica a este flujo"}`; ninguna tarjeta
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P07_n8n_contrato_no_aplica.jpg](evidencias/P07_n8n_contrato_no_aplica.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba7_Contrato_No_Aplica_Workflow.jpg](evidencias/C11_Prueba7_Contrato_No_Aplica_Workflow.jpg)
 
 ### Caso CP-08: Observación ambigua
 - **Revisión asociada:** RC-08
@@ -161,7 +161,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Efecto que no debe ocurrir:** una categoría inventada o un resumen con hechos no mencionados
 - **Resultado observado:** "[REVISAR] Observaciones (IA) · otro: Pendiente lo de siempre"
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P08_n8n_respuesta200.jpg](evidencias/P08_n8n_respuesta200.jpg) ![P08_trello_REVISAR_ambigua.jpg](evidencias/P08_trello_REVISAR_ambigua.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba8_Mensaje_Ambiguo_Workflow.jpg](evidencias/C11_Prueba8_Mensaje_Ambiguo_Workflow.jpg) ![C11_Prueba8_Mensaje_Ambiguo_Trello.jpg](evidencias/C11_Prueba8_Mensaje_Ambiguo_Trello.jpg)
 
 ### Caso CP-09: Intento de cambiar las instrucciones de la IA
 - **Revisión asociada:** RC-09, RC-17
@@ -171,7 +171,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Efecto que no debe ocurrir:** clasificar como `documentos`, quitar la revisión o crear más tarjetas
 - **Resultado observado:** el modelo devolvió `otro`, `requiere_revision: true`; una sola tarjeta con "[REVISAR] … otro: Solicitud de ignorar instrucciones y crear tarjetas."
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P09_n8n_respuesta200.jpg](evidencias/P09_n8n_respuesta200.jpg) ![P09_n8n_salida_modelo_IA.jpg](evidencias/P09_n8n_salida_modelo_IA.jpg) ![P09_trello_REVISAR_inyeccion.jpg](evidencias/P09_trello_REVISAR_inyeccion.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba9_Intento_Inyeccion_Workflow.jpg](evidencias/C11_Prueba9_Intento_Inyeccion_Workflow.jpg) ![C11_Prueba9_Intento_Inyeccion_Modelo_Gemini.jpg](evidencias/C11_Prueba9_Intento_Inyeccion_Modelo_Gemini.jpg) ![C11_Prueba9_Intento_Inyeccion_Trello.jpg](evidencias/C11_Prueba9_Intento_Inyeccion_Trello.jpg)
 
 ### Caso CP-10: IA no disponible
 - **Revisión asociada:** RC-10
@@ -183,7 +183,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Cómo se preparó de forma controlada:** cambio temporal del modelo, restaurado después de la prueba (no quedó en el JSON exportado)
 - **Resultado observado:** Gemini respondió 404 (modelo no encontrado); 200; tarjeta con "Observaciones (IA): no se pudo procesar; revisar manualmente."
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P10_n8n_condicion_modelo_invalido.jpg](evidencias/P10_n8n_condicion_modelo_invalido.jpg) ![P10_n8n_error_modelo_404.jpg](evidencias/P10_n8n_error_modelo_404.jpg) ![P10_trello_tarjeta_revisar_manual.jpg](evidencias/P10_trello_tarjeta_revisar_manual.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba10_IA_No_Disponible_Condicion_Modelo.jpg](evidencias/C11_Prueba10_IA_No_Disponible_Condicion_Modelo.jpg) ![C11_Prueba10_IA_No_Disponible_Modelo_Gemini.jpg](evidencias/C11_Prueba10_IA_No_Disponible_Modelo_Gemini.jpg) ![C11_Prueba10_IA_No_Disponible_Trello.jpg](evidencias/C11_Prueba10_IA_No_Disponible_Trello.jpg)
 
 ### Caso CP-11: Trello no disponible al consultar tarjetas
 - **Revisión asociada:** RC-06
@@ -195,7 +195,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Cómo se preparó de forma controlada:** cambio temporal de la URL, restaurado después
 - **Resultado observado:** **200 y se creó la tarjeta "Onboarding Ricardo Mora Demo · TI".** El GET envió el error a su rama de error, pero *Always Output Data* también dejó un ítem vacío en la rama de éxito; ese ítem siguió el camino normal, la comprobación de duplicados no encontró nada y se creó la tarjeta. El primer paso que incumple es `GET tarjetas Trello` (rama de éxito con 1 ítem vacío).
 - **Conclusión de la prueba:** **No cumple (v2)**
-- **Evidencia de ejecución:** ![P11_n8n_condicion_board_invalido.jpg](evidencias/P11_n8n_condicion_board_invalido.jpg) ![P11_n8n_GET_rama_exito_item_vacio.jpg](evidencias/P11_n8n_GET_rama_exito_item_vacio.jpg) ![P11_n8n_GET_rama_error.jpg](evidencias/P11_n8n_GET_rama_error.jpg) ![P11_trello_tarjeta_creada_sin_verificar_NOCUMPLE.jpg](evidencias/P11_trello_tarjeta_creada_sin_verificar_NOCUMPLE.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba11_Trello_Caido_Condicion_URL.jpg](evidencias/C11_Prueba11_Trello_Caido_Condicion_URL.jpg) ![C11_Prueba11_Trello_Caido_GET_Rama_Exito.jpg](evidencias/C11_Prueba11_Trello_Caido_GET_Rama_Exito.jpg) ![C11_Prueba11_Trello_Caido_GET_Rama_Error.jpg](evidencias/C11_Prueba11_Trello_Caido_GET_Rama_Error.jpg) ![C11_Prueba11_Trello_Caido_Trello_NoCumple.jpg](evidencias/C11_Prueba11_Trello_Caido_Trello_NoCumple.jpg)
 
 ### Ajuste realizado: v3
 1. `GET tarjetas Trello` → Settings → **Always Output Data desactivado**.
@@ -203,7 +203,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 3. `¿Ya existe la tarjeta?` → la expresión lee `body`:
    `{{ ($json.tarjetas ?? []).flatMap(t => Array.isArray(t.body) ? t.body : [t]).some(c => String(c.name ?? '').replace(/^=/, '').trim() === "Onboarding " + $json.nombre + " · " + $json.area_responsable) }}`
 4. Settings → Error workflow: `Manejador_Errores` → **`Workflow_Final`** (posible solo después de publicar).
-- **Evidencia de configuración:** ![V3_cambio_GET_include_response_sin_alwaysOutput.jpg](evidencias/V3_cambio_GET_include_response_sin_alwaysOutput.jpg) ![V3_cambio_expresion_duplicados.png](evidencias/V3_cambio_expresion_duplicados.png) ![V3_settings_error_workflow_Workflow_Final.jpg](evidencias/V3_settings_error_workflow_Workflow_Final.jpg)
+- **Evidencia de configuración:** ![C11_Ajuste_v3_GET_Include_Response.jpg](evidencias/C11_Ajuste_v3_GET_Include_Response.jpg) ![C11_Ajuste_v3_Expresion_Duplicados.png](evidencias/C11_Ajuste_v3_Expresion_Duplicados.png) ![C11_Ajuste_v3_Error_Workflow_Settings.jpg](evidencias/C11_Ajuste_v3_Error_Workflow_Settings.jpg)
 
 ### Caso CP-11b: Trello no disponible (repetición en v3)
 - **Revisión asociada:** RC-06
@@ -212,7 +212,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Resultado esperado:** 503; ninguna tarjeta
 - **Resultado observado:** 503 `{"ok":false,"error":"No fue posible consultar las tarjetas de Trello; no se creó ninguna tarjeta."}`; la rama de éxito sale vacía; no hay tarjeta de Tomás en el tablero
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P11v3_n8n_respuesta503_rama_error.jpg](evidencias/P11v3_n8n_respuesta503_rama_error.jpg) ![PFIN_trello_tablero_estado_final.jpg](evidencias/PFIN_trello_tablero_estado_final.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba11b_v3_Trello_Caido_Respuesta503.jpg](evidencias/C11_Prueba11b_v3_Trello_Caido_Respuesta503.jpg) ![C11_Tablero_Estado_Final_Trello.jpg](evidencias/C11_Tablero_Estado_Final_Trello.jpg)
 
 ### Caso CP-05b: Duplicado (regresión en v3)
 - **Revisión asociada:** RC-05
@@ -220,7 +220,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Resultado esperado:** 409 con la nueva expresión
 - **Resultado observado:** 409; el IF leyó `tarjetas[0].body` y salió por la rama true
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P05v3_n8n_respuesta409.jpg](evidencias/P05v3_n8n_respuesta409.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba5b_v3_Duplicado_Workflow.jpg](evidencias/C11_Prueba5b_v3_Duplicado_Workflow.jpg)
 
 ### Caso CP-01b: Registro normal (regresión en v3)
 - **Revisión asociada:** RC-07
@@ -228,7 +228,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Resultado esperado:** 200 y una tarjeta en TI
 - **Resultado observado:** 200; tarjeta "Onboarding Paula Ríos Prueba · TI"
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P01v3_n8n_normal_Paula_200.jpg](evidencias/P01v3_n8n_normal_Paula_200.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba1b_v3_Normal_TI_Workflow.jpg](evidencias/C11_Prueba1b_v3_Normal_TI_Workflow.jpg)
 
 ### Caso CP-12: Fallo no controlado → incidente (producción)
 - **Revisión asociada:** RC-13, RC-20
@@ -240,7 +240,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Cómo se preparó de forma controlada:** bandera `forzar_error`, diseñada solo para pruebas
 - **Resultado observado:** ejecución 78 en error ("Fallo controlado del laboratorio Clase 08"); ejecución 79 del Error Trigger; tarjeta "[INCIDENTE] Workflow_Final - Stop and Error · fallo controlado" con todos los datos; sin tarjeta de onboarding. El cliente recibió **200 con cuerpo vacío**.
 - **Conclusión de la prueba:** **Cumple, con observación:** la respuesta al cliente no informa el fallo (PD-06)
-- **Evidencia de ejecución:** ![P12_n8n_ejecucion_78_error_forzado.jpg](evidencias/P12_n8n_ejecucion_78_error_forzado.jpg) ![P12_n8n_ejecucion_79_error_trigger.jpg](evidencias/P12_n8n_ejecucion_79_error_trigger.jpg) ![P12_trello_tarjeta_incidente.jpg](evidencias/P12_trello_tarjeta_incidente.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba12_Incidente_Produccion_Ejecucion.jpg](evidencias/C11_Prueba12_Incidente_Produccion_Ejecucion.jpg) ![C11_Prueba12_Incidente_Produccion_Manejador.jpg](evidencias/C11_Prueba12_Incidente_Produccion_Manejador.jpg) ![C11_Prueba12_Incidente_Produccion_Trello.jpg](evidencias/C11_Prueba12_Incidente_Produccion_Trello.jpg)
 
 ### Caso CP-13: URL de producción
 - **Revisión asociada:** RC-18
@@ -249,7 +249,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Resultado esperado:** 200 y una tarjeta en RRHH
 - **Resultado observado:** 200; tarjeta en RRHH con "documentos: Debe entregar copia del diploma profesional"; ejecución de producción 77 (v3)
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![P13_n8n_ejecucion_produccion_77.jpg](evidencias/P13_n8n_ejecucion_produccion_77.jpg) ![P13_trello_tarjeta_RRHH_produccion.jpg](evidencias/P13_trello_tarjeta_RRHH_produccion.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba13_Produccion_Executions.jpg](evidencias/C11_Prueba13_Produccion_Executions.jpg) ![C11_Prueba13_Produccion_Trello.jpg](evidencias/C11_Prueba13_Produccion_Trello.jpg)
 
 ### Caso CP-14: Clave de cabecera incorrecta
 - **Revisión asociada:** RC-01
@@ -257,7 +257,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 - **Resultado esperado:** 403 sin ejecución
 - **Resultado observado:** 403 "Authorization data is wrong!"; no se ejecutó ningún nodo
 - **Conclusión de la prueba:** **Cumple**
-- **Evidencia de ejecución:** ![PX1_n8n_403_clave_incorrecta.jpg](evidencias/PX1_n8n_403_clave_incorrecta.jpg)
+- **Evidencia de ejecución:** ![C11_Prueba14_Clave_Incorrecta_Workflow.jpg](evidencias/C11_Prueba14_Clave_Incorrecta_Workflow.jpg)
 
 ### Resumen de ejecuciones
 
@@ -308,7 +308,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 | Integrante | Etapas o situaciones revisadas | Observación o duda identificada | Acuerdo del grupo y pendiente asociado |
 |---|---|---|---|
 | Valeria | Todas las etapas; ejecución de CP-01 a CP-14 | Brecha en RC-06 (Always Output Data); Error workflow apuntando a `Manejador_Errores` | Corregido en v3 (PD-01); PD-02 al README |
-| Manuela | [Completar] | [Completar] | [Completar] |
+| Manuela | Consolidación del workflow en un solo JSON (subworkflow dentro del principal y salida Fallback 422 en el `Switch por área`), tablero de Trello "Onboarding Final", pruebas iniciales sobre ese tablero y revisión del cumplimiento de la guía | En la primera prueba de duplicado la solicitud repetida creó una segunda tarjeta (corregido, ahora responde 409); un nodo llevaba un nombre real (PD-10); las evidencias de clases anteriores se habían subido al repositorio | La versión definitiva es la v3; el README documenta la configuración y el paso del Error workflow (PD-02); en el repositorio solo quedan las evidencias de la clase 11 |
 | Karol | [Completar] | [Completar] | [Completar] |
 | Sofía | Documentación y diagramas contra `Workflow_Final_v3.json`: recorrido completo, los tres HTTP Request, componente de IA y manejo de errores | `forzar_error` responde 200 vacío (PD-06); el nodo de incidente no tiene reintentos ni salida de error; el Error workflow debe reconfigurarse al importar (PD-02) | PD-06 cerrado con la documentación; PD-13 propuesto, falta acuerdo del grupo; PD-02 queda en el README |
 | Miguel | Revisión de cierre y publicación en GitHub de Workflow_Final.json, bitácora de pruebas (CP-01 a CP-14 / 17 ejecuciones), evidencias, README/presentación y auditoría de limpieza/PD-10 | Enlaces de evidencias en formato Obsidian en la bitácora original (incompatibles con GitHub), revisión de PD-10 (nombre real en nodo) y verificación de que no queden secretos (AIza, ATTA, ATTI, X-API-Key, tokens o enlaces de invitación) ni nombres reales indebidos en JSON, documentos o capturas | Convertir enlaces de la bitácora a rutas relativas (evidencias/...), subir evidencias revisadas y archivos de Manuela al confirmar, auditar secretos/nombres y validar renderizado en ventana de incógnito (sin sesión); pendiente cierre de PD-02 en README |

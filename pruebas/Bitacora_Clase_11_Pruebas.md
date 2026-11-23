@@ -311,7 +311,7 @@ Talento Humano envía un POST al webhook con la cabecera `X-API-Key` y los datos
 | Manuela | [Completar] | [Completar] | [Completar] |
 | Karol | [Completar] | [Completar] | [Completar] |
 | Sofía | Documentación y diagramas contra `Workflow_Final_v3.json`: recorrido completo, los tres HTTP Request, componente de IA y manejo de errores | `forzar_error` responde 200 vacío (PD-06); el nodo de incidente no tiene reintentos ni salida de error; el Error workflow debe reconfigurarse al importar (PD-02) | PD-06 cerrado con la documentación; PD-13 propuesto, falta acuerdo del grupo; PD-02 queda en el README |
-| Miguel | [Completar] | [Completar] | [Completar] |
+| Miguel | Revisión de cierre y publicación en GitHub de Workflow_Final.json, bitácora de pruebas (CP-01 a CP-14 / 17 ejecuciones), evidencias, README/presentación y auditoría de limpieza/PD-10 | Enlaces de evidencias en formato Obsidian en la bitácora original (incompatibles con GitHub), revisión de PD-10 (nombre real en nodo) y verificación de que no queden secretos (AIza, ATTA, ATTI, X-API-Key, tokens o enlaces de invitación) ni nombres reales indebidos en JSON, documentos o capturas | Convertir enlaces de la bitácora a rutas relativas (evidencias/...), subir evidencias revisadas y archivos de Manuela al confirmar, auditar secretos/nombres y validar renderizado en ventana de incógnito (sin sesión); pendiente cierre de PD-02 en README |
 
 ### Comprobación final del equipo
 

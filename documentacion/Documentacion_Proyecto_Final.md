@@ -45,10 +45,10 @@ Recibir la solicitud de Talento Humano en un solo punto, validarla y crear autom
 | Integrante | Aporte al proyecto |
 |---|---|
 | Manuela Camacho Llano | Creó el repositorio y el tablero de Trello "Onboarding Final"; consolidó el workflow en un solo JSON (incluida la respuesta 422 para áreas no reconocidas); documentación y bitácora, organización de las evidencias, README, ensamblaje de la presentación y revisión del cumplimiento de la entrega |
-| Karol [COMPLETAR APELLIDOS] | Importó el workflow final en su instalación de n8n (prueba de importación); agregó el manejo de errores (Error Trigger → tarjeta en Incidentes) y la salida de error con respuesta 503 en la consulta a Trello |
-| Valeria [COMPLETAR APELLIDOS] | Ejecutó las pruebas (14 casos, 17 ejecuciones), corrigió la consulta a Trello en la v3, redactó la bitácora de la clase 11 y las diapositivas de resultados |
-| Sofía [COMPLETAR APELLIDOS] | Documentación del proyecto, diagramas de los procesos manual y automatizado, y diapositivas de contexto, solución e IA |
-| Miguel [COMPLETAR APELLIDOS] | Subida de los entregables al repositorio y revisión de secretos, nombres reales y enlaces |
+| Karol Dahiana Vanegas Arteaga | Importó el workflow final en su instalación de n8n (prueba de importación); agregó el manejo de errores (Error Trigger → tarjeta en Incidentes) y la salida de error con respuesta 503 en la consulta a Trello |
+| Valeria Cerón Muñoz | Ejecutó las pruebas (14 casos, 17 ejecuciones), corrigió la consulta a Trello en la v3, redactó la bitácora de la clase 11 y las diapositivas de resultados |
+| Sofía Pérez Vanegas | Documentación del proyecto, diagramas de los procesos manual y automatizado, y diapositivas de contexto, solución e IA |
+| Juan Miguel Cerón Ocampo | Subida de los entregables al repositorio y revisión de secretos, nombres reales y enlaces |
 
 ---
 

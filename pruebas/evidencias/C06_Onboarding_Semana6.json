@@ -1,0 +1,646 @@
+{
+  "name": "C06_Onboarding_Semana6",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 3. If + Switch + pruebas — Valeria\n\n**If tipo_contrato = fijo:** es la misma regla de la Semana 3. Ya está conectado: salida **true** → Switch. La salida **false** queda libre (ahí se puede documentar el caso que no aplica).\n\n**Switch por área:** 3 rutas — TI / RRHH / Operaciones — leyendo `area_responsable`.\n\n**Pruebas (2 casos):** enviar el formulario dos veces y verificar en qué salida cae cada item.\n- Caso 1: tipo_contrato = fijo, area = TI → true → ruta TI\n- Caso 2: tipo_contrato = temporal → false (no llega al Switch)\n\n⚠️ El Switch solo enruta bien **después** de que Karol cree `area_responsable`.",
+        "height": 460,
+        "width": 320,
+        "color": 4
+      },
+      "id": "e22f14a8-a9cc-406a-ab9b-94fcc6074ad1",
+      "name": "Sticky Note db985b30",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        992
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 2. Expresiones y mapeo — Karol ⬅️ SIGUE AQUÍ\n\nEl nodo **Edit Fields · mapeo (Karol)** ya está creado y conectado, pero **vacío**: hoy solo deja pasar los campos del formulario (Include Other Fields = ON).\n\n**Lo que falta (abrir el nodo y agregar los campos):**\n- `nombre` → limpiar espacios, en **Expression**: `{{ $json.nombre.trim() }}`\n- `area_responsable` → normalizar el área del formulario: `{{ $json.area.trim() }}`\n  ⚠️ Este nombre es obligatorio: el Switch de abajo lee `area_responsable`, no `area`.\n- `id_onboarding` → por ejemplo: `{{ \"ONB-\" + $json.area.trim() + \"-\" + $now.toFormat(\"yyyyLLdd-HHmmss\") }}`\n\n**Revisar:** cada valor debe estar en **Expression**, no en Fixed. Si en el OUTPUT se ve el texto literal `{{ ... }}`, quedó en Fixed.\n\n**Evidencia:** captura del nodo abierto + captura del OUTPUT transformado.",
+        "height": 520,
+        "width": 320,
+        "color": 6
+      },
+      "id": "c283a939-fdce-438b-967d-ceab5707df48",
+      "name": "Sticky Note b3947db3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        912
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 1. Form Trigger — Sofía ✅ LISTO\n\n**Qué hace:** publica un formulario web. Al enviarlo, n8n arranca el workflow con esos campos en JSON. Reemplaza el Manual Trigger de la Semana 3.\n\n**Campos (los nombres del OUTPUT son exactamente estos):**\n- `nombre` — texto libre\n- `area` — dropdown: TI / RRHH / Operaciones\n- `fecha_ingreso` — date (YYYY-MM-DD)\n- `tipo_contrato` — dropdown: fijo / temporal / aprendiz (mantiene la regla del If)\n\n**Cómo probarlo:** botón **Test step** → se abre la Test URL del formulario → llenar y enviar → el OUTPUT del nodo muestra 1 item con los 4 campos + `submittedAt` y `formMode`.\n\n**Ojo:** el formulario NO limpia ni normaliza nada. `nombre` puede llegar con espacios y `area` no se llama todavía `area_responsable`: eso lo resuelve el mapeo de Karol.",
+        "height": 520,
+        "width": 320,
+        "color": 5
+      },
+      "id": "b0223e7b-64d9-4975-a5b7-794b5fa0986b",
+      "name": "Sticky Note 19da9681",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a9177685-924d-4789-a8b8-18f274a4eff2",
+              "name": "id_onboarding ",
+              "value": "={{ $json.id_onboarding }}",
+              "type": "string"
+            },
+            {
+              "id": "cb9e3b26-9157-4f1b-b890-797dbab6e0b5",
+              "name": "asunto",
+              "value": "={{ \"Onboarding \" + $json.nombre + \" · \" + $json.area_responsable }}",
+              "type": "string"
+            },
+            {
+              "id": "7f334a99-169a-48a5-987a-703318d4825e",
+              "name": "cuerpo",
+              "value": "=Tareas iniciales:\n- Asignar puesto de trabajo a {{$json.nombre}}\n- Entregar dotación\n- Coordinar inducción de seguridad",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2784,
+        2032
+      ],
+      "id": "1d3e5634-77e7-4817-854f-7f1fb2f00ae9",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a9177685-924d-4789-a8b8-18f274a4eff2",
+              "name": "id_onboarding ",
+              "value": "={{ $json.id_onboarding }}",
+              "type": "string"
+            },
+            {
+              "id": "cb9e3b26-9157-4f1b-b890-797dbab6e0b5",
+              "name": "asunto",
+              "value": "={{ \"Onboarding \" + $json.nombre + \" · \" + $json.area_responsable }}",
+              "type": "string"
+            },
+            {
+              "id": "7f334a99-169a-48a5-987a-703318d4825e",
+              "name": "cuerpo",
+              "value": "=Tareas iniciales: - Firmar contrato tipo {{$json.tipo_contrato}} para {{$json.nombre}} - Afiliar a seguridad social - Entregar manual de convivencia",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2784,
+        1872
+      ],
+      "id": "7690c7f2-d213-42d5-b75e-b7ae2d5ae5e0",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a9177685-924d-4789-a8b8-18f274a4eff2",
+              "name": "id_onboarding ",
+              "value": "={{ $json.id_onboarding }}",
+              "type": "string"
+            },
+            {
+              "id": "cb9e3b26-9157-4f1b-b890-797dbab6e0b5",
+              "name": "asunto",
+              "value": "={{ \"Onboarding \" + $json.nombre + \" · \" + $json.area_responsable }}",
+              "type": "string"
+            },
+            {
+              "id": "7f334a99-169a-48a5-987a-703318d4825e",
+              "name": "cuerpo",
+              "value": "=Tareas iniciales:\n- Crear usuario institucional para {{$json.nombre}}\n- Solicitar accesos al área de {{$json.area_responsable}}\n- Preparar equipo",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2784,
+        1728
+      ],
+      "id": "49ec6a41-dc70-421e-94fd-8acccd591012",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "content": "## Onboarding · Semana 4 — flujo del equipo\n\n`Form Trigger → Edit Fields (expresiones) → If → Switch → Salida útil`\n\nUn solo workflow para los cinco. Cada quien abre SU nodo, lo configura, prueba y avisa al siguiente. No duplicar el workflow.\n\n1. Sofía — Form Trigger ✅\n2. Karol — expresiones y mapeo\n3. Valeria — If + Switch + 2 pruebas\n4. Miguel — salida útil\n5. Manu — diagrama, bitácora, capturas, checklist y export del JSON a 02_Workflows/",
+        "height": 320,
+        "width": 420,
+        "color": 7
+      },
+      "id": "0017f38b-63ba-4279-9670-816cb42d579e",
+      "name": "Sticky Note 534bffb1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        2448
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 4. Salida útil — Miguel\n\nLas 3 salidas del Switch están **sin conectar** a propósito: aquí va la salida útil.\n\n**Qué crear:** uno o varios nodos **Edit Fields** después del Switch con:\n- `id_onboarding` → viene del mapeo de Karol\n- `asunto` → ej. `{{ \"Onboarding \" + $json.nombre + \" · \" + $json.area_responsable }}`\n- `cuerpo` → tareas iniciales del nuevo colaborador según el área\n\nLa idea es que el workflow no termine en \"TI/RRHH/Operaciones\", sino que produzca un registro utilizable por Talento Humano.\n\n**Evidencia:** captura del nodo y de su OUTPUT.",
+        "height": 420,
+        "width": 320,
+        "color": 3
+      },
+      "id": "0c0520bc-7789-4ef1-9ece-cffd6b2545a5",
+      "name": "Sticky Note 5d549ad9",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "s1",
+                    "leftValue": "={{ $json.area_responsable }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    },
+                    "rightValue": "TI"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TI"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "s2",
+                    "leftValue": "={{ $json.area_responsable }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    },
+                    "rightValue": "RRHH"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "RRHH"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "s3",
+                    "leftValue": "={{ $json.area_responsable }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    },
+                    "rightValue": "Operaciones"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Operaciones"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "212df76e-a1e3-49f5-b650-18dbd118d518",
+      "name": "Switch por área",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        2368,
+        1856
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.tipo_contrato }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              },
+              "rightValue": "fijo"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "id": "3b03c5cb-4d02-48eb-a98b-3c6ec92820e2",
+      "name": "If tipo_contrato = fijo",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2048,
+        1856
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cbf04050-a805-4166-8750-fa7f37418373",
+              "name": "nombre",
+              "value": "={{ $json.nombre.trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "b301a47b-e137-4226-9b1e-c0cfcad7a1cb",
+              "name": "area_responsable",
+              "value": "={{ $json.area.trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "2de5f4d4-15cf-4762-a0d5-1d0de9d0ed3d",
+              "name": "id_onboarding",
+              "value": "={{ \"ONB-\" + $json.area.trim() + \"-\" + $now.toFormat(\"yyyyLLdd-HHmmss\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "034eb106-576b-4763-b93d-333e6ba7ea5b",
+      "name": "Edit Fields · mapeo (Karol)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1728,
+        1856
+      ]
+    },
+    {
+      "parameters": {
+        "formTitle": "Registro de nuevo colaborador · Onboarding",
+        "formDescription": "Talento Humano registra aquí los datos del nuevo colaborador para iniciar el proceso de onboarding.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "nombre",
+              "placeholder": "Ej: Ana Pérez",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "area",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "TI"
+                  },
+                  {
+                    "option": "RRHH"
+                  },
+                  {
+                    "option": "Operaciones"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "fecha_ingreso",
+              "fieldType": "date",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "tipo_contrato",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "fijo"
+                  },
+                  {
+                    "option": "temporal"
+                  },
+                  {
+                    "option": "aprendiz"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Registrar colaborador",
+          "path": "onboarding-semana4",
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Registro recibido. El proceso de onboarding ha iniciado."
+            }
+          },
+          "useWorkflowTimezone": true
+        }
+      },
+      "id": "56cd0825-55c9-47a7-9fca-9dbf9b9cd186",
+      "name": "Form Onboarding",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        1408,
+        1856
+      ],
+      "webhookId": "284f1d06-a5db-4624-898e-bb65cb3d4276"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.trello.com/1/cards",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "trelloApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "idList",
+              "value": "6abb0b3e4752d7ac47ad81a8"
+            },
+            {
+              "name": "name",
+              "value": "=={{ $json.asunto }}"
+            },
+            {
+              "name": "desc",
+              "value": "=={{ $json.cuerpo }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2992,
+        1872
+      ],
+      "id": "2335b5b8-0214-4407-b11a-4b968c59bd63",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.trello.com/1/cards",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "trelloApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "idList",
+              "value": "6abb0b3e4752d7ac47ad81a7"
+            },
+            {
+              "name": "name",
+              "value": "=={{ $json.asunto }}"
+            },
+            {
+              "name": "desc",
+              "value": "=={{ $json.cuerpo }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2992,
+        1728
+      ],
+      "id": "464b139f-67b0-4eed-8a24-5db40c750ec2",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "   https://api.trello.com/1/cards",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "trelloApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "idList",
+              "value": "6abb0b3e4752d7ac47ad81a9"
+            },
+            {
+              "name": "=name",
+              "value": "=   {{ $json.asunto }}"
+            },
+            {
+              "name": "=desc",
+              "value": "=   {{ $json.cuerpo }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        3008,
+        2032
+      ],
+      "id": "02e413cc-506e-4dc5-9d2a-5cfac47d406f",
+      "name": "HTTP Request",
+      "credentials": {
+        "trelloApi": {
+          "id": "3LBe7bNvZUuRvOX1",
+          "name": "Trello account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch por área": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If tipo_contrato = fijo": {
+      "main": [
+        [
+          {
+            "node": "Switch por área",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields · mapeo (Karol)": {
+      "main": [
+        [
+          {
+            "node": "If tipo_contrato = fijo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Onboarding": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields · mapeo (Karol)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "002cd80d-f3da-42e5-92c1-0416afcb3103",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "65cabfb26aed5f31b92223fd10bddc18570f261c6750edeefdd249803ea69a7a"
+  },
+  "nodeGroups": [],
+  "id": "7SHzgD6PfRGCZZvp",
+  "tags": []
+}
